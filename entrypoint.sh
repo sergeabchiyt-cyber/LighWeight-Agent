@@ -4,8 +4,14 @@ set -e
 # 1. Inject SSH Key from Env Var
 mkdir -p ~/.ssh /root/workspace
 chmod 700 ~/.ssh
-printf "%s" "$LIGHTNING_SSH_KEY" > ~/.ssh/key
+
+# printf "%s\n" guarantees a trailing newline, which libcrypto strictly requires
+printf "%s\n" "$LIGHTNING_SSH_KEY" > ~/.ssh/key
 chmod 600 ~/.ssh/key
+
+# Debug: Print the first and last line of the key to Render logs
+echo "🔍 Key header: $(head -n 1 ~/.ssh/key)"
+echo "🔍 Key footer: $(tail -n 1 ~/.ssh/key)"
 
 SSH_CMD="ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/key"
 
@@ -29,7 +35,6 @@ fi
 # 4. Locate config and start daemon
 export ZEROCLAW_workspace__path=/root/workspace
 
-# Find the config dynamically inside the synced home directory
 CONFIG_PATH=$(find /root/workspace -name "config.toml" -print -quit)
 if [ -z "$CONFIG_PATH" ]; then
   echo "❌ config.toml not found in home directory."
