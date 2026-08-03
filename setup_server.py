@@ -3,27 +3,35 @@ import os, sys, http.server, socketserver
 PORT = int(os.environ.get("PORT", 10000))
 WORKSPACE = "/workspace"
 
-class Handler(http.server.SimpleHTTPRequestHandler):
+class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write(self.html().encode())
+        if self.path == '/' or self.path == '/setup':
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write(self.html().encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
 
     def do_POST(self):
-        length = int(self.headers.get('Content-Length', 0))
-        data = self.rfile.read(length).decode()
-        
         if self.path == '/save':
-            with open(f"{WORKSPACE}/config.toml", "w") as f: f.write(data)
+            length = int(self.headers.get('Content-Length', 0))
+            data = self.rfile.read(length).decode()
+            with open(f"{WORKSPACE}/config.toml", "w") as f: 
+                f.write(data)
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(b"Saved")
+            self.wfile.write(b"Saved to Lightning /workspace")
         elif self.path == '/done':
-            with open(f"{WORKSPACE}/.setup_complete", "w") as f: f.write("1")
+            with open(f"{WORKSPACE}/.setup_complete", "w") as f: 
+                f.write("1")
             self.send_response(200)
             self.end_headers()
             sys.exit(0)
+        else:
+            self.send_response(404)
+            self.end_headers()
 
     def html(self):
         return """<!DOCTYPE html><html><head><title>ZeroClaw Setup</title>
@@ -59,4 +67,5 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
+        print(f"Serving setup UI on port {PORT}...")
         httpd.serve_forever()
