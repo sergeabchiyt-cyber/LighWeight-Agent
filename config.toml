@@ -5,12 +5,12 @@ require_pairing = false
 
 [channels.telegram.main]
 enabled = true
-bot_token = "8912892601:AAGdn2ZCx24hNy08Hy8YZmqHjK3v25Hq7as"
+bot_token = "8912892601:AAGJ40SQzwNs2hozTJRH9e_YmUZQ7qV5nqQ"
 allowlist = ["8048482277"]
 
 [providers.models.nvidia.nim]
 kind = "nvidia"
-api_key = "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"
+api_key = "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"
 model = "z-ai/glm-5.2"
 max_concurrent = 1
 
