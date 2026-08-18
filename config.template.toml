@@ -1,7 +1,3 @@
-[mcp]
-enabled = true
-deferred_loading = false
-
 [gateway]
 require_pairing = false
 
@@ -9,14 +5,18 @@ require_pairing = false
 token = "${TELEGRAM_BOT_TOKEN}"
 allowlist = ["${TELEGRAM_USER_ID}"]
 
+[mcp]
+enabled = true
+deferred_loading = false
+
 [[mcp.servers]]
 name = "render_lightpanda"
 url = "${LIGHTPANDA_MCP_URL}"
-transport = "streamable_http"
+transport = "http" # MUST be "http". "streamable_http" is an invalid enum variant.
 headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
 
 [llm]
 provider = "openai"
 base_url = "https://integrate.api.nvidia.com/v1"
 api_key = "${NVIDIA_NIM_API_KEY}"
-model = "nvidia/glm-5.2" # ADJUST TO YOUR EXACT NIM MODEL ID
+model = "nvidia/glm-5.2
