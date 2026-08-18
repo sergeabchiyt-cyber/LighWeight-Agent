@@ -14,7 +14,7 @@ api_key = "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
 model = "z-ai/glm-5.2"
 
 [agents.default]
-default_model = "nim"
+model_provider = "nvidia.nim"
 mcp_bundles = ["browser"]
 risk_profile = "trusted"
 
