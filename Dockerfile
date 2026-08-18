@@ -1,5 +1,8 @@
 FROM python:3.11-slim
 
+# 0. Set working directory to prevent "directory nonexistent" errors
+WORKDIR /app
+
 # 1. Install basic file handling utilities + gettext (for envsubst)
 RUN apt-get update && apt-get install -y \
     curl \
@@ -8,8 +11,9 @@ RUN apt-get update && apt-get install -y \
     gettext \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Install ZeroClaw Rust binary
-RUN curl -fsSL https://zeroclawlabs.ai/install.sh | bash
+# 2. Install ZeroClaw Rust binary 
+# (-L follows the 301 redirect to www., -A bypasses Cloudflare's basic bot protection)
+RUN curl -fsSL -A "Mozilla/5.0" -L https://zeroclawlabs.ai/install.sh | bash
 
 # 3. Create config directory and copy the template
 RUN mkdir -p /root/.zeroclaw
