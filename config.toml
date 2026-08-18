@@ -8,14 +8,15 @@ enabled = true
 bot_token = "8912892601:AAGJ40SQzwNs2hozTJRH9e_YmUZQ7qV5nqQ"
 allowlist = ["8048482277"]
 
-[providers.models.nvidia.nim]
-kind = "nvidia"
+[providers.models.cf_nim]
+kind = "openai-compatible"
+base_url = "https://fragrant-flower-5338.sergeabchiyt.workers.dev"
 api_key = "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"
 model = "z-ai/glm-5.2"
 max_concurrent = 1
 
 [agents.default]
-model_provider = "nvidia.nim"
+model_provider = "cf_nim"
 mcp_bundles = ["browser"]
 risk_profile = "trusted"
 
