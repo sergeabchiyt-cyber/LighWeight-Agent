@@ -1,9 +1,9 @@
 FROM python:3.11-slim
 
-# 0. Set working directory to prevent "directory nonexistent" errors
+# 0. Set working directory
 WORKDIR /app
 
-# 1. Install basic file handling utilities + gettext (for envsubst)
+# 1. Install basic utilities + gettext (for envsubst)
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
     gettext \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Install ZeroClaw directly from GitHub to bypass Cloudflare 403
+# 2. Install ZeroClaw directly from GitHub
 RUN curl -fsSL https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/master/install.sh | sh
 
-# 3. Add Cargo bin to PATH so the 'zeroclaw' binary is globally executable
+# 3. Add Cargo bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # 4. Create config directory and copy the template
@@ -35,5 +35,5 @@ class Handler(BaseHTTPRequestHandler):\n\
             self.end_headers()\n\
 HTTPServer(('0.0.0.0', int(os.environ.get('PORT', 10000))), Handler).serve_forever()" > /app/keepalive.py
 
-# 6. Render environment variables into config.toml, start Dummy Server, and launch ZeroClaw Daemon
-CMD ["sh", "-c", "envsubst < /root/.zeroclaw/config.template.toml > /root/.zeroclaw/config.toml && python /app/keepalive.py & zeroclaw daemon"]
+# 6. Render environment variables, start Dummy Server, and launch ZeroClaw Daemon WITH BYPASS FLAG
+CMD ["sh", "-c", "envsubst < /root/.zeroclaw/config.template.toml > /root/.zeroclaw/config.toml && python /app/keepalive.py & zeroclaw daemon --allow-degraded-security"]
