@@ -5,12 +5,12 @@ require_pairing = false
 
 [channels.telegram.main]
 enabled = true
-bot_token = "PASTE_YOUR_TELEGRAM_BOT_TOKEN_HERE"
-allowlist = ["PASTE_YOUR_NUMERIC_TELEGRAM_ID_HERE"]
+bot_token = "8912892601:AAGdn2ZCx24hNy08Hy8YZmqHjK3v25Hq7as"
+allowlist = ["8048482277"]
 
 [providers.models.nvidia.nim]
 kind = "nvidia"
-api_key = "PASTE_YOUR_NVIDIA_NIM_API_KEY_HERE"
+api_key = "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"
 model = "z-ai/glm-5.2"
 rate_limit_rpm = 35
 max_concurrent = 1
@@ -28,6 +28,6 @@ level = "full"
 servers = ["render_lightpanda"]
 
 [mcp.servers.render_lightpanda]
-url = "PASTE_YOUR_LIGHTPANDA_RENDER_URL_HERE"
+url = "https://backend-browser-agent.onrender.com/mcp"
 transport = "http"
 headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
