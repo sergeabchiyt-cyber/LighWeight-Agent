@@ -3,7 +3,7 @@ require_pairing = false
 
 [channels.telegram]
 token = "${TELEGRAM_BOT_TOKEN}"
-allowlist = ["${TELEGRAM_USER_ID}"]
+allowlist = ["${TELEGRAM_USER_ID}"] 
 
 [mcp]
 enabled = true
@@ -12,11 +12,11 @@ deferred_loading = false
 [[mcp.servers]]
 name = "render_lightpanda"
 url = "${LIGHTPANDA_MCP_URL}"
-transport = "http" # MUST be "http". "streamable_http" is an invalid enum variant.
+transport = "http"
 headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
 
 [llm]
 provider = "openai"
 base_url = "https://integrate.api.nvidia.com/v1"
 api_key = "${NVIDIA_NIM_API_KEY}"
-model = "nvidia/glm-5.2
+model = "nvidia/glm-5.2"
