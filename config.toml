@@ -1,14 +1,16 @@
 schema_version = 3
 
+[gateway]
+require_pairing = false
+
 [channels.telegram.main]
 enabled = true
 token = "8912892601:AAGdn2ZCx24hNy08Hy8YZmqHjK3v25Hq7as"
 allowlist = ["8048482277"]
 
-[providers.models.openai.nvidia]
-kind = "openai"
+[providers.models.nvidia.nim]
+kind = "nvidia"
 api_key = "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"
-base_url = "https://integrate.api.nvidia.com/v1"
 model = "z-ai/glm-5.2"
 
 [agents.default]
@@ -17,9 +19,6 @@ mcp_bundles = ["browser"]
 
 [mcp_bundles.browser]
 servers = ["render_lightpanda"]
-
-[mcp]
-enabled = true
 
 [mcp.servers.render_lightpanda]
 url = "https://backend-browser-agent.onrender.com/mcp"
