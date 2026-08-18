@@ -1,9 +1,15 @@
 [gateway]
 require_pairing = false
 
-[channels.telegram]
+[channels.telegram.main]
+enabled = true
 token = "${TELEGRAM_BOT_TOKEN}"
-allowlist = ["${TELEGRAM_USER_ID}"] 
+allowlist = ["${TELEGRAM_USER_ID}"]
+
+[providers.openai]
+api_key = "${NVIDIA_NIM_API_KEY}"
+base_url = "https://integrate.api.nvidia.com/v1"
+model = "z-ai/glm-5.2" # Adjust to your exact NIM model ID
 
 [mcp]
 enabled = true
@@ -14,9 +20,3 @@ name = "render_lightpanda"
 url = "${LIGHTPANDA_MCP_URL}"
 transport = "http"
 headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
-
-[llm]
-provider = "openai"
-base_url = "https://integrate.api.nvidia.com/v1"
-api_key = "${NVIDIA_NIM_API_KEY}"
-model = "nvidia/glm-5.2"
