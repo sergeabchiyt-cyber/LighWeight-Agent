@@ -5,7 +5,7 @@ require_pairing = false
 
 [channels.telegram.main]
 enabled = true
-token = "8912892601:AAGdn2ZCx24hNy08Hy8YZmqHjK3v25Hq7as"
+bot_token = "8912892601:AAGdn2ZCx24hNy08Hy8YZmqHjK3v25Hq7as"
 allowlist = ["8048482277"]
 
 [providers.models.nvidia.nim]
@@ -14,8 +14,12 @@ api_key = "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
 model = "z-ai/glm-5.2"
 
 [agents.default]
-default_model = "nvidia"
+default_model = "nim"
 mcp_bundles = ["browser"]
+risk_profile = "trusted"
+
+[risk_profiles.trusted]
+level = "full"
 
 [mcp_bundles.browser]
 servers = ["render_lightpanda"]
