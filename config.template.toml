@@ -1,0 +1,18 @@
+[mcp]
+enabled = true
+deferred_loading = false
+
+[channels.telegram]
+token = "${TELEGRAM_BOT_TOKEN}"
+
+[[mcp.servers]]
+name = "render_lightpanda"
+url = "${LIGHTPANDA_MCP_URL}" # Injected from Render Environment Variable
+transport = "streamable_http"
+headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
+
+[llm]
+provider = "openai"
+base_url = "https://integrate.api.nvidia.com/v1"
+api_key = "${NVIDIA_NIM_API_KEY}"
+model = "nvidia/glm-5.2"
