@@ -2,8 +2,12 @@
 enabled = true
 deferred_loading = false
 
+[gateway]
+require_pairing = false
+
 [channels.telegram]
-token = "${TELEGRAM_BOT_TOKEN}" 
+token = "${TELEGRAM_BOT_TOKEN}"
+allowlist = ["${TELEGRAM_USER_ID}"]
 
 [[mcp.servers]]
 name = "render_lightpanda"
