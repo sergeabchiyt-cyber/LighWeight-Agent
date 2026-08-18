@@ -10,13 +10,16 @@ allowlist = ["PASTE_YOUR_NUMERIC_TELEGRAM_ID_HERE"]
 
 [providers.models.nvidia.nim]
 kind = "nvidia"
-api_key = "PASTE_YOUR_NVIDIA_API_KEY_HERE"
+api_key = "PASTE_YOUR_NVIDIA_NIM_API_KEY_HERE"
 model = "z-ai/glm-5.2"
+rate_limit_rpm = 35
+max_concurrent = 1
 
 [agents.default]
 model_provider = "nvidia.nim"
 mcp_bundles = ["browser"]
 risk_profile = "trusted"
+reply_intent_precheck = false
 
 [risk_profiles.trusted]
 level = "full"
