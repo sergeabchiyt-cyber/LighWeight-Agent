@@ -10,10 +10,9 @@ allowlist = ["8048482277"]
 
 [providers.models.cf_nim]
 kind = "openai-compatible"
-base_url = "https://fragrant-flower-5338.sergeabchiyt.workers.dev"
-api_key = "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"
+base_url = "https://fragrant-flower-5338.sergeabchiyt.workers.dev/"
 model = "z-ai/glm-5.2"
-max_concurrent = 1
+api_key = "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"
 
 [agents.default]
 model_provider = "cf_nim"
@@ -29,7 +28,11 @@ level = "full"
 [mcp_bundles.browser]
 servers = ["render_lightpanda"]
 
-[mcp.servers.render_lightpanda]
-url = "https://backend-browser-agent.onrender.com/mcp"
+[mcp]
+enabled = true
+
+[[mcp.servers]]
+name = "render_lightpanda"
 transport = "http"
+url = "https://backend-browser-agent.onrender.com/mcp"
 headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
