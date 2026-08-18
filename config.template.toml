@@ -1,21 +1,18 @@
 [mcp]
-enabled = true # Must be explicitly true or MCP is silently disabled
-deferred_loading = false # Loads all MCP tools eagerly into the context window
+enabled = true
+deferred_loading = false
 
 [channels.telegram]
-# Injected via Render Environment Variable
 token = "${TELEGRAM_BOT_TOKEN}" 
 
 [[mcp.servers]]
 name = "render_lightpanda"
-url = "${LIGHTPANDA_MCP_URL}" # Injected from Render Environment Variable
+url = "${LIGHTPANDA_MCP_URL}"
 transport = "streamable_http"
-# Matches your required headers exactly
 headers = { "Content-Type" = "application/json", "Accept" = "application/json, text/event-stream" }
 
 [llm]
-# NVIDIA NIM exposes an OpenAI-compatible API
 provider = "openai"
 base_url = "https://integrate.api.nvidia.com/v1"
 api_key = "${NVIDIA_NIM_API_KEY}"
-model = "nvidia/glm-5.2" # ADJUST TO YOUR EXACT NIM MODEL ID (e.g., kimi-k2.6, step-3.7-flash)
+model = "nvidia/glm-5.2" # ADJUST TO YOUR EXACT NIM MODEL ID
