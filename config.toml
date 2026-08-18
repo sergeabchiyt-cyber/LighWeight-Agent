@@ -8,14 +8,14 @@ enabled = true
 bot_token = "8912892601:AAGJ40SQzwNs2hozTJRH9e_YmUZQ7qV5nqQ"
 allowlist = ["8048482277"]
 
-[providers.models.cf_nim]
+[providers.models.custom.cf_nim]
 kind = "openai-compatible"
 base_url = "https://fragrant-flower-5338.sergeabchiyt.workers.dev/"
 model = "z-ai/glm-5.2"
 api_key = "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"
 
 [agents.default]
-model_provider = "cf_nim"
+model_provider = "custom.cf_nim"
 mcp_bundles = ["browser"]
 risk_profile = "trusted"
 
