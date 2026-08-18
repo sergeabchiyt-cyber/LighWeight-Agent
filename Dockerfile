@@ -2,16 +2,26 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
+# 1. Install all required dependencies + gettext (for envsubst if needed later)
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    unzip \
+    file \
+    gettext \
+    && rm -rf /var/lib/apt/lists/*
 
+# 2. Install ZeroClaw directly from GitHub
 RUN curl -fsSL https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/master/install.sh | sh
 
+# 3. Add Cargo bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
 
+# 4. Create config directory and copy the hardcoded file
 RUN mkdir -p /root/.zeroclaw
-# Direct copy of the hardcoded file
 COPY config.toml /root/.zeroclaw/config.toml 
 
+# 5. Dummy HTTP Server with explicit /health endpoint
 RUN echo "import os\nfrom http.server import HTTPServer, BaseHTTPRequestHandler\n\
 class Handler(BaseHTTPRequestHandler):\n\
     def do_GET(self):\n\
@@ -24,4 +34,5 @@ class Handler(BaseHTTPRequestHandler):\n\
             self.end_headers()\n\
 HTTPServer(('0.0.0.0', int(os.environ.get('PORT', 10000))), Handler).serve_forever()" > /app/keepalive.py
 
+# 6. Start Dummy Server and ZeroClaw Daemon concurrently
 CMD ["sh", "-c", "python /app/keepalive.py & zeroclaw daemon"]
