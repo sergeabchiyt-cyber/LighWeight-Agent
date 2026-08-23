@@ -35,6 +35,6 @@ RUN mkdir -p /root/.picoclaw \
 
 ENV PICOCLAW_GATEWAY_HOST=0.0.0.0
 
-EXPOSE 10000 8080 8000
+EXPOSE 8000 8080 10000
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
