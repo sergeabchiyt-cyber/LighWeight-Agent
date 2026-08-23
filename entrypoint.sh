@@ -3,6 +3,9 @@
 # Inject Render Env Vars into config.json
 envsubst < /etc/picoclaw/config.template.json > /root/.picoclaw/config.json
 
+# Activate virtual environment
+. /opt/venv/bin/activate
+
 # Start health server
 /usr/local/bin/health-server &
 
