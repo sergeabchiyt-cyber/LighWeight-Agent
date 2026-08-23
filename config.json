@@ -1,0 +1,44 @@
+{
+  "agents": {
+    "defaults": {
+      "model_name": "qwen3.8-27b-free"
+    }
+  },
+  "model_list": [
+    {
+      "model_name": "qwen3.8-27b-free",
+      "model": "openai/qwen/qwen3.8-27b-free",
+      "api_base": "https://api.orcarouter.ai/v1",
+      "api_key": "${ORCAROUTER_API_KEY}"
+    }
+  ],
+  "channel_list": {
+    "telegram": {
+      "enabled": true,
+      "type": "telegram",
+      "token": "${TELEGRAM_BOT_TOKEN}",
+      "allow_from": ["${TELEGRAM_USER_ID}"],
+      "proxy": "${TELEGRAM_PROXY}",
+      "use_markdown_v2": false,
+      "media_group_delay_ms": 500
+    }
+  },
+  "tools": {
+    "binance": {
+      "enabled": true,
+      "type": "binance",
+      "api_key": "${BINANCE_API_KEY}",
+      "api_secret": "${BINANCE_API_SECRET}",
+      "testnet": false,
+      "sub_account": "${BINANCE_SUB_ACCOUNT_NAME}"
+    }
+  },
+  "mcp_servers": {
+    "browser": {
+      "enabled": true,
+      "transport": "http",
+      "url": "https://backend-browser-agent.onrender.com/mcp",
+      "description": "Browser automation tools for web scraping and interaction"
+    }
+  }
+}
