@@ -5,7 +5,6 @@ import os
 
 app = FastAPI()
 
-# Initialize Binance client
 binance = ccxt.binance({
     'apiKey': os.environ.get('BINANCE_API_KEY'),
     'secret': os.environ.get('BINANCE_API_SECRET'),
@@ -15,15 +14,10 @@ binance = ccxt.binance({
     }
 })
 
-# Optional: set sub-account if using one
-sub_account = os.environ.get('BINANCE_SUB_ACCOUNT_NAME')
-if sub_account:
-    binance.headers = {'X-MBX-SUB-ACCOUNT': sub_account}
-
 class TradeRequest(BaseModel):
     symbol: str
-    side: str  # "buy" or "sell"
-    type: str  # "market" or "limit"
+    side: str
+    type: str
     amount: float
     price: float = None
 
