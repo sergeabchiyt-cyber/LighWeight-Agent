@@ -1,4 +1,4 @@
-FROM golang:1.25-alpine AS builder
+FROM golang:alpine AS builder
 
 RUN apk add --no-cache git gcc musl-dev libc-dev
 
@@ -36,7 +36,10 @@ COPY --from=builder /health-server /usr/local/bin/health-server
 COPY config.template.json /etc/picoclaw/config.template.json
 COPY binance_tools.py /app/binance_tools.py
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Ensure config directory exists and all binaries are executable
+RUN mkdir -p /root/.picoclaw
+RUN chmod +x /usr/local/bin/picoclaw /usr/local/bin/health-server /usr/local/bin/entrypoint.sh
 
 ENV PICOCLAW_GATEWAY_HOST=0.0.0.0
 
