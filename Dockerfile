@@ -28,8 +28,9 @@ RUN go build -o /health-server /build/health.go
 # --- Runtime Stage ---
 FROM alpine:latest
 
-RUN apk add --no-cache ca-certificates tzdata gettext python3 py3-pip
-RUN pip3 install --no-cache-dir fastapi uvicorn ccxt
+RUN apk add --no-cache ca-certificates tzdata gettext python3 py3-pip py3-virtualenv
+RUN python3 -m venv /opt/venv
+RUN /opt/venv/bin/pip install --no-cache-dir fastapi uvicorn ccxt
 
 WORKDIR /app
 
