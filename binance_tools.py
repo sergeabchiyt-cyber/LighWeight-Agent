@@ -5,6 +5,22 @@ import os
 
 app = FastAPI()
 
+@app.get("/debug/config")
+async def debug_config():
+    try:
+        with open("/root/.picoclaw/config.json") as f:
+            return f.read()
+    except FileNotFoundError:
+        raise HTTPException(404, "config.json not found")
+
+@app.get("/debug/security")
+async def debug_security():
+    try:
+        with open("/root/.picoclaw/.security.yml") as f:
+            return f.read()
+    except FileNotFoundError:
+        raise HTTPException(404, ".security.yml not found")
+
 binance = ccxt.binance({
     'apiKey': os.environ.get('BINANCE_API_KEY'),
     'secret': os.environ.get('BINANCE_API_SECRET'),
