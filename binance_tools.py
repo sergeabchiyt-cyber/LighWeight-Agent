@@ -2,9 +2,26 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import ccxt
 import os
+import glob
 
 app = FastAPI()
 
+@app.get("/debug/state")
+async def debug_state():
+    result = {
+        "picoclaw_dir_exists": os.path.exists("/root/.picoclaw"),
+        "files_in_picoclaw_dir": glob.glob("/root/.picoclaw/*"),
+        "etc_picoclaw_files": glob.glob("/etc/picoclaw/*"),
+        "env_vars_present": {
+            "ORCAROUTER_API_KEY": bool(os.environ.get("ORCAROUTER_API_KEY")),
+            "TELEGRAM_BOT_TOKEN": bool(os.environ.get("TELEGRAM_BOT_TOKEN")),
+            "TELEGRAM_USER_ID": bool(os.environ.get("TELEGRAM_USER_ID")),
+        },
+        "current_user": os.getenv("USER", "unknown"),
+        "home": os.path.expanduser("~")
+    }
+    return result
+    
 @app.get("/debug/config")
 async def debug_config():
     try:
