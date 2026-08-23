@@ -2,7 +2,7 @@
   "version": 3,
   "agents": {
     "defaults": {
-      "model_name": "deepseek-v4-pro-free"
+      "model_name": "deepseek-v4-pro-free",
       "context_window": 1000000
     }
   },
