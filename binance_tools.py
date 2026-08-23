@@ -6,6 +6,10 @@ import glob
 
 app = FastAPI()
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+    
 @app.get("/debug/security-path")
 async def debug_security_path():
     import os
