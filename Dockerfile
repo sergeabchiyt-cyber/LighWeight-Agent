@@ -1,39 +1,48 @@
-FROM python:3.11-slim
+FROM golang:1.23-alpine AS builder
+
+RUN apk add --no-cache git gcc musl-dev libc-dev python3 py3-pip
+
+WORKDIR /build
+
+# Build PicoClaw
+RUN git clone https://github.com/sipeed/picoclaw.git .
+RUN go build -o /picoclaw .
+
+# Install Python dependencies for Binance tools
+RUN pip3 install --no-cache-dir fastapi uvicorn ccxt
+
+# Build health server
+RUN cat <<EOF > /build/health.go
+package main
+import "net/http"
+func main() {
+    http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+        w.WriteHeader(http.StatusOK)
+        w.Write([]byte("OK"))
+    })
+    http.ListenAndServe(":8080", nil)
+}
+EOF
+RUN go build -o /health-server /build/health.go
+
+# --- Runtime Stage ---
+FROM alpine:latest
+
+RUN apk add --no-cache ca-certificates tzdata gettext python3 py3-pip
+RUN pip3 install --no-cache-dir fastapi uvicorn ccxt
 
 WORKDIR /app
 
-# 1. Install all required dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    ca-certificates \
-    unzip \
-    file \
-    gettext \
-    && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /picoclaw /usr/local/bin/picoclaw
+COPY --from=builder /health-server /usr/local/bin/health-server
+COPY config.template.json /etc/picoclaw/config.template.json
+COPY binance_tools.py /app/binance_tools.py
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# 2. Install ZeroClaw directly from GitHub
-RUN curl -fsSL https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/master/install.sh | sh
+ENV PICOCLAW_GATEWAY_HOST=0.0.0.0
+ENV PORT=18800
 
-# 3. Add Cargo bin to PATH and FORCE Rust logging natively inside the image
-ENV PATH="/root/.cargo/bin:${PATH}"
-ENV RUST_LOG="info,zeroclaw=debug"
+EXPOSE 10000 8080 8000
 
-# 4. Create config directory and copy the hardcoded file
-RUN mkdir -p /root/.zeroclaw
-COPY config.toml /root/.zeroclaw/config.toml 
-
-# 5. Dummy HTTP Server with explicit /health endpoint
-RUN echo "import os\nfrom http.server import HTTPServer, BaseHTTPRequestHandler\n\
-class Handler(BaseHTTPRequestHandler):\n\
-    def do_GET(self):\n\
-        if self.path == '/health':\n\
-            self.send_response(200)\n\
-            self.end_headers()\n\
-            self.wfile.write(b'ZeroClaw Node Healthy')\n\
-        else:\n\
-            self.send_response(404)\n\
-            self.end_headers()\n\
-HTTPServer(('0.0.0.0', int(os.environ.get('PORT', 10000))), Handler).serve_forever()" > /app/keepalive.py
-
-# 6. Start Dummy Server and ZeroClaw Daemon WITH THE --verbose FLAG
-CMD ["sh", "-c", "python /app/keepalive.py & zeroclaw daemon --verbose"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
