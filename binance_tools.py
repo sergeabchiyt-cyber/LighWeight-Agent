@@ -10,54 +10,6 @@ app = FastAPI()
 async def health():
     return {"status": "ok"}
     
-@app.get("/debug/security-path")
-async def debug_security_path():
-    import os
-    paths_to_check = [
-        "/root/.picoclaw/.security.yml",
-        "/root/.picoclaw/security.yml",
-        "/root/.picoclaw/config.security.yml",
-    ]
-    results = {}
-    for p in paths_to_check:
-        results[p] = {
-            "exists": os.path.exists(p),
-            "size": os.path.getsize(p) if os.path.exists(p) else 0
-        }
-    return results
-    
-@app.get("/debug/state")
-async def debug_state():
-    result = {
-        "picoclaw_dir_exists": os.path.exists("/root/.picoclaw"),
-        "files_in_picoclaw_dir": glob.glob("/root/.picoclaw/*"),
-        "etc_picoclaw_files": glob.glob("/etc/picoclaw/*"),
-        "env_vars_present": {
-            "ORCAROUTER_API_KEY": bool(os.environ.get("ORCAROUTER_API_KEY")),
-            "TELEGRAM_BOT_TOKEN": bool(os.environ.get("TELEGRAM_BOT_TOKEN")),
-            "TELEGRAM_USER_ID": bool(os.environ.get("TELEGRAM_USER_ID")),
-        },
-        "current_user": os.getenv("USER", "unknown"),
-        "home": os.path.expanduser("~")
-    }
-    return result
-    
-@app.get("/debug/config")
-async def debug_config():
-    try:
-        with open("/root/.picoclaw/config.json") as f:
-            return f.read()
-    except FileNotFoundError:
-        raise HTTPException(404, "config.json not found")
-
-@app.get("/debug/security")
-async def debug_security():
-    try:
-        with open("/root/.picoclaw/.security.yml") as f:
-            return f.read()
-    except FileNotFoundError:
-        raise HTTPException(404, ".security.yml not found")
-
 binance = ccxt.binance({
     'apiKey': os.environ.get('BINANCE_API_KEY'),
     'secret': os.environ.get('BINANCE_API_SECRET'),
