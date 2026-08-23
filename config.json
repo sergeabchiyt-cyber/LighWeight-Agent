@@ -29,8 +29,7 @@
       "type": "binance",
       "api_key": "${BINANCE_API_KEY}",
       "api_secret": "${BINANCE_API_SECRET}",
-      "testnet": false,
-      "sub_account": "${BINANCE_SUB_ACCOUNT_NAME}"
+      "testnet": false
     }
   },
   "mcp_servers": {
