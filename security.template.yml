@@ -1,2 +1,4 @@
-telegram:
-  token: "${TELEGRAM_BOT_TOKEN}"
+channel_list:
+  telegram:
+    settings:
+      token: "${TELEGRAM_BOT_TOKEN}"
