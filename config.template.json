@@ -16,6 +16,7 @@
   "channel_list": {
     "telegram": {
       "enabled": true,
+      "type": "telegram",
       "allow_from": ["${TELEGRAM_USER_ID}"]
     }
   },
