@@ -1,4 +1,5 @@
 {
+  "version": 3,
   "agents": {
     "defaults": {
       "model_name": "qwen3.8-27b-free"
@@ -16,28 +17,18 @@
     "telegram": {
       "enabled": true,
       "type": "telegram",
-      "token": "${TELEGRAM_BOT_TOKEN}",
-      "allow_from": ["${TELEGRAM_USER_ID}"],
-      "proxy": "${TELEGRAM_PROXY}",
-      "use_markdown_v2": false,
-      "media_group_delay_ms": 500
+      "allow_from": ["${TELEGRAM_USER_ID}"]
     }
   },
   "tools": {
-    "binance": {
-      "enabled": true,
-      "type": "binance",
-      "api_key": "${BINANCE_API_KEY}",
-      "api_secret": "${BINANCE_API_SECRET}",
-      "testnet": false
-    }
-  },
-  "mcp_servers": {
-    "browser": {
-      "enabled": true,
-      "transport": "http",
-      "url": "https://backend-browser-agent.onrender.com/mcp",
-      "description": "Browser automation tools for web scraping and interaction"
+    "mcp": {
+      "servers": {
+        "browser": {
+          "enabled": true,
+          "type": "http",
+          "url": "https://backend-browser-agent.onrender.com/mcp"
+        }
+      }
     }
   }
 }
