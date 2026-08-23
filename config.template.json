@@ -2,13 +2,14 @@
   "version": 3,
   "agents": {
     "defaults": {
-      "model_name": "qwen3.8-27b-free"
+      "model_name": "deepseek-v4-pro-free"
+      "context_window": 1000000
     }
   },
   "model_list": [
     {
-      "model_name": "qwen3.8-27b-free",
-      "model": "openai/qwen/qwen3.8-27b-free",
+      "model_name": "deepseek-v4-pro-free",
+      "model": "openai/deepseek/deepseek-v4-pro-free",
       "api_base": "https://api.orcarouter.ai/v1",
       "api_keys": ["${ORCAROUTER_API_KEY}"]
     }
