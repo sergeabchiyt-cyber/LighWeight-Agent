@@ -1,4 +1,2 @@
-channels:
-  telegram:
-    enabled: true
-    token: "${TELEGRAM_BOT_TOKEN}"
+telegram:
+  token: "${TELEGRAM_BOT_TOKEN}"
