@@ -35,7 +35,7 @@ WORKDIR /app
 
 COPY --from=builder /picoclaw /usr/local/bin/picoclaw
 COPY --from=builder /health-server /usr/local/bin/health-server
-COPY config.template.json /etc/picoclaw/config.json
+COPY config.template.json /etc/picoclaw/config.template.json
 COPY binance_tools.py /app/binance_tools.py
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
