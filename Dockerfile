@@ -26,6 +26,7 @@ WORKDIR /app
 
 COPY --from=builder /health-server /usr/local/bin/health-server
 COPY config.template.json /etc/picoclaw/config.template.json
+COPY security.template.yml /etc/picoclaw/security.template.yml
 COPY binance_tools.py /app/binance_tools.py
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
