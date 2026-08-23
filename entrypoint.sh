@@ -15,4 +15,4 @@ uvicorn binance_tools:app --host 0.0.0.0 --port 8000 &
 
 # PicoClaw gateway on Render's port
 export PORT="${PORT:-10000}"
-exec picoclaw
+exec picoclaw gateway
