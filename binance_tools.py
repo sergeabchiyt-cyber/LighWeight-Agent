@@ -6,6 +6,22 @@ import glob
 
 app = FastAPI()
 
+@app.get("/debug/security-path")
+async def debug_security_path():
+    import os
+    paths_to_check = [
+        "/root/.picoclaw/.security.yml",
+        "/root/.picoclaw/security.yml",
+        "/root/.picoclaw/config.security.yml",
+    ]
+    results = {}
+    for p in paths_to_check:
+        results[p] = {
+            "exists": os.path.exists(p),
+            "size": os.path.getsize(p) if os.path.exists(p) else 0
+        }
+    return results
+    
 @app.get("/debug/state")
 async def debug_state():
     result = {
