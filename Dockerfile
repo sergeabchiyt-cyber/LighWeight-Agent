@@ -1,15 +1,12 @@
-FROM golang:1.23-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
-RUN apk add --no-cache git gcc musl-dev libc-dev python3 py3-pip
+RUN apk add --no-cache git gcc musl-dev libc-dev
 
 WORKDIR /build
 
 # Build PicoClaw
 RUN git clone https://github.com/sipeed/picoclaw.git .
 RUN go build -o /picoclaw .
-
-# Install Python dependencies for Binance tools
-RUN pip3 install --no-cache-dir fastapi uvicorn ccxt
 
 # Build health server
 RUN cat <<EOF > /build/health.go
@@ -42,7 +39,6 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENV PICOCLAW_GATEWAY_HOST=0.0.0.0
-ENV PORT=18800
 
 EXPOSE 10000 8080 8000
 
