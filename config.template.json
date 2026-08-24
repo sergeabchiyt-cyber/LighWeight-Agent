@@ -23,6 +23,7 @@
   },
   "tools": {
     "mcp": {
+      "enabled": true,
       "servers": {
         "browser": {
           "enabled": true,
