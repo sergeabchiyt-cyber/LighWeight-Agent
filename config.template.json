@@ -2,16 +2,17 @@
   "version": 3,
   "agents": {
     "defaults": {
-      "model_name": "deepseek-v4-pro-free",
-      "context_window": 1000000
+      "model_name": "z-ai/glm-5.2:free",
+      "context_window": 262000                           
     }
+    
   },
   "model_list": [
     {
-      "model_name": "deepseek-v4-pro-free",
-      "model": "openai/deepseek/deepseek-v4-pro-free",
-      "api_base": "https://api.orcarouter.ai/v1",
-      "api_keys": ["${ORCAROUTER_API_KEY}"]
+      "model_name": "z-ai/glm-5.2:free",
+      "model": "openai/z-ai/glm-5.2:free",
+      "api_base": "https://openrouter.ai/api/v1/",
+      "api_keys": ["${OPENROUTER_API_KEY}"]
     }
   ],
   "channel_list": {
