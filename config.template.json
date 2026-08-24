@@ -2,17 +2,17 @@
   "version": 3,
   "agents": {
     "defaults": {
-      "model_name": "z-ai/glm-5.2:free",
-      "context_window": 262000                           
+      "model_name": "minimaxai/minimax-m3",
+      "context_window": 1000000                        
     }
     
   },
   "model_list": [
     {
-      "model_name": "z-ai/glm-5.2:free",
-      "model": "openai/z-ai/glm-5.2:free",
-      "api_base": "https://openrouter.ai/api/v1/",
-      "api_keys": ["${OPENROUTER_API_KEY}"]
+      "model_name": "minimaxai/minimax-m3",
+      "model": "openai/minimaxai/minimax-m3",
+      "api_base": "https://integrate.api.nvidia.com/v1",
+      "api_keys": ["${NVIDIA_API_KEY}"]
     }
   ],
   "channel_list": {
