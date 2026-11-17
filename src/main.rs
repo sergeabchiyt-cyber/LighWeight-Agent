@@ -23,7 +23,7 @@ struct AppState {
 /// The official Ironclaw Telegram v2 webhook path.
 /// Ironclaw uses `/webhook/telegram-v2/{installation_id}`,
 /// and the default installation ID is `"default"`.
-const TELEGRAM_V2_PATH: &str = "/webhook/telegram-v2/default";
+const TELEGRAM_V2_PATH: &str = "/webhooks/extensions/telegram/updates";
 
 #[tokio::main]
 async fn main() {
