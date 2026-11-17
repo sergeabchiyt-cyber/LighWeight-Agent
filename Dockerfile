@@ -8,11 +8,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY Cargo.toml Cargo.lock ./
+# Copy Cargo.toml and (if present) Cargo.lock.
+# The `*` makes Cargo.lock optional so the build works before the lock file exists.
+COPY Cargo.toml Cargo.lock* ./
 COPY src ./src
 
 # Build the release binary.
-RUN cargo build --release --locked
+# Drop `--locked` because the lock file may not exist yet.
+RUN cargo build --release
 
 # ---- Runtime stage ----
 FROM debian:bookworm-slim
@@ -25,11 +28,8 @@ WORKDIR /app
 
 COPY --from=builder /app/target/release/telegram-webhook-gateway /app/telegram-webhook-gateway
 
-# Render sets PORT automatically; default to 10000 if not set[reference:5].
+# Render sets PORT automatically; default to 10000 if not set.
 ENV PORT=10000
-
-# Do NOT hardcode TELEGRAM_WEBHOOK_SECRET here.
-# Set it as an environment variable in the Render dashboard.
 
 EXPOSE 10000
 
